@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nasir.studio - Portfolio</title>
+    <style>
+        /* Reset and Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border-width: 0;
+            border-style: solid;
+            border-color: currentColor; /* Tailwind default */
+        }
+
+        html {
+            scroll-behavior: smooth;
+            line-height: 1.5; /* Tailwind default */
+            -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape */
+             tab-size: 4; /* Tailwind default */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Close approximation */
+        }
+
+        /* Light Theme Variables */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb; /* gray-50 */
+            --bg-tertiary: #f3f4f6; /* gray-100 */
+            --bg-subtle: #f3f4f6; /* gray-100 for tags/pills */
+            --bg-hover: #f3f4f6; /* gray-100 */
+            --bg-card: #f9fafb; /* gray-50 */
+            --bg-card-hover: #f3f4f6; /* gray-100 */
+            --bg-modal: #ffffff;
+            --bg-header-scrolled: rgba(255, 255, 255, 0.9);
+            --bg-mobile-menu: rgba(255, 255, 255, 0.95);
+
+            --text-primary: #111827; /* gray-900 */
+            --text-secondary: #374151; /* gray-700 */
+            --text-muted: #6b7280; /* gray-500 */
+            --text-subtle: #4b5563; /* gray-600 */
+            --text-accent: #2563eb; /* blue-600 */
+            --text-on-accent: #ffffff;
+            --text-heading: #111827; /* gray-900 */
+
+            --border-primary: #e5e7eb; /* gray-200 */
+            --border-secondary: #d1d5db; /* gray-300 */
+            --border-accent: #2563eb; /* blue-600 */
+
+            --ring-color: #3b82f6; /* blue-500 */
+            --ring-offset-color: var(--bg-primary);
+
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+             --overlay-hover: rgba(0, 0, 0, 0.03); /* Slight overlay for hover */
+        }
+
+        /* Dark Theme Variables */
+        html.dark {
+            --bg-primary: #111827; /* gray-900 */
+            --bg-secondary: #1f2937; /* gray-800 */
+            --bg-tertiary: #374151; /* gray-700 */
+            --bg-subtle: #1f2937; /* gray-800 */
+            --bg-hover: #374151; /* gray-700 */
+            --bg-card: rgba(31, 41, 55, 0.5); /* gray-800/50 */
+            --bg-card-hover: #1f2937; /* gray-800 */
+            --bg-modal: #111827; /* gray-900 */
+            --bg-header-scrolled: rgba(17, 24, 39, 0.9); /* gray-900/90 */
+            --bg-mobile-menu: rgba(17, 24, 39, 0.95); /* gray-900/95 */
+
+            --text-primary: #ffffff; /* white */
+            --text-secondary: #d1d5db; /* gray-300 */
+            --text-muted: #9ca3af; /* gray-400 */
+            --text-subtle: #d1d5db; /* gray-300 */
+            --text-accent: #60a5fa; /* blue-400 */
+            --text-on-accent: #111827;
+            --text-heading: #ffffff; /* white */
+
+            --border-primary: #374151; /* gray-700 */
+            --border-secondary: #4b5563; /* gray-600 */
+            --border-accent: #60a5fa; /* blue-400 */
+
+            --ring-color: #60a5fa; /* blue-400 */
+            --ring-offset-color: var(--bg-primary);
+
+            /* Dark mode shadows are often more subtle or rely on borders */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.15);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+
+            --overlay-hover: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-secondary); /* Default text */
+            min-height: 100vh;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-heading);
+            font-weight: 500; /* Default medium weight for headings */
+        }
+        /* Remove default p margins, use utility classes or specific CSS */
+        /* p { margin-bottom: 1em; }
+        p:last-child { margin-bottom: 0; } */
+
+        a { color: var(--text-accent); text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: var(--text-accent); text-decoration: underline; } /* Keep consistent hover */
+
+        button {
+            font: inherit;
+            cursor: pointer;
+            background: none;
+            color: inherit;
+        }
+
+        img, svg, video, canvas, audio, iframe, embed, object {
+            display: block;
+            vertical-align: middle;
+            max-width: 100%;
+            height: auto; /* Default responsive images */
+        }
+        img.h-full { height: 100%; object-fit: cover; } /* Specific for covering containers */
+        img.w-full { width: 100%; }
+
+
+        /* Focus Visible Styling */
+        :focus-visible {
+            outline: 2px solid var(--ring-color);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px var(--ring-offset-color); /* Simulate offset */
+        }
+        button:focus { outline: none; } /* Remove default button outline if :focus-visible is used */
+
+
+        /* Layout Container */
+        .container {
+            width: 100%;
+            max-width: 1280px; /* lg */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+        }
+
+        /* Header Styles */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background-color: transparent;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
+        }
+        #main-header.scrolled {
+            background-color: var(--bg-header-scrolled);
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem; /* py-4 */
+            padding-bottom: 1rem;
+        }
+        .logo-button {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 500;
+            letter-spacing: -0.025em; /* tracking-tight */
+            color: var(--text-heading);
+            border-radius: 0.25rem; /* rounded */
+        }
+        .logo-button span { color: var(--text-accent); }
+
+        .desktop-nav { display: none; } /* Hidden by default */
+        .desktop-nav .nav-button {
+             font-size: 0.875rem; /* text-sm */
+             letter-spacing: 0.025em; /* tracking-wide */
+             color: var(--text-subtle);
+             transition: color 0.2s ease;
+             margin-left: 2rem; /* space-x-8 */
+        }
+        .desktop-nav .nav-button:first-child { margin-left: 0; }
+        .desktop-nav .nav-button:hover { color: var(--text-accent); }
+        .desktop-nav .nav-button.active {
+            color: var(--text-accent);
+            font-weight: 500;
+        }
+        .theme-toggle-button {
+            margin-left: 1rem; /* ml-4 in desktop */
+            padding: 0.5rem; /* p-2 */
+            border-radius: 9999px; /* rounded-full */
+            color: var(--text-muted);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .theme-toggle-button:hover { background-color: var(--bg-hover); }
+
+        .mobile-nav-toggle-area { display: flex; align-items: center; }
+        #menu-toggle-button {
+            padding: 0.5rem; /* p-2 */
+            border-radius: 0.375rem; /* rounded-md */
+            color: var(--text-muted);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        #menu-toggle-button:hover { background-color: var(--bg-hover); }
+        #theme-toggle-mobile { margin-right: 0.5rem; /* mr-2 */ }
+
+        /* Mobile Menu Overlay */
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            z-index: 30;
+            background-color: var(--bg-mobile-menu);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        #mobile-menu.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        /* Container needed inside for padding */
+        .mobile-menu-container {
+             display: flex;
+             flex-direction: column;
+             height: 100%;
+        }
+        .mobile-menu-header {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: calc(1rem + 0.25rem); /* Align with header */
+            margin-bottom: 2rem; /* mb-8 */
+        }
+        #mobile-menu-close-button {
+            padding: 0.5rem; /* p-2 */
+            border-radius: 0.375rem; /* rounded-md */
+            color: var(--text-muted);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        #mobile-menu-close-button:hover { background-color: var(--bg-hover); }
+        .mobile-menu-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .mobile-menu-nav .mobile-nav-button {
+            font-size: 1.875rem; /* text-3xl */
+            letter-spacing: 0.025em; /* tracking-wide */
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+            margin-top: 2.5rem; /* space-y-10 */
+        }
+        .mobile-menu-nav .mobile-nav-button:first-child { margin-top: 0; }
+        .mobile-menu-nav .mobile-nav-button:hover { color: var(--text-accent); }
+        .mobile-menu-nav .mobile-nav-button.active {
+             color: var(--text-accent);
+             font-weight: 500;
+        }
+        .mobile-menu-footer-spacer { padding-bottom: 2.5rem; /* pb-10 */ }
+
+
+        /* Main Content Area */
+        main {
+            padding-top: 7rem; /* pt-28 */
+            padding-bottom: 6rem; /* pb-24 */
+            position: relative;
+            z-index: 10; /* Above potential background elements, below header */
+        }
+        .content-section { display: block; } /* Default */
+        .content-section.hidden { display: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        /* Work Section Specifics */
+        #work-section .intro-text {
+            max-width: 48rem; /* max-w-3xl */
+            margin-bottom: 3rem; /* mb-12 */
+        }
+         #work-section h1 {
+            font-size: 2.25rem; /* text-4xl */
+            line-height: 1.25; /* leading-tight */
+            margin-bottom: 1rem; /* mb-4 */
+         }
+         #work-section .intro-text p {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.625; /* leading-relaxed */
+            color: var(--text-muted);
+             margin-bottom: 0; /* Override default p margin */
+         }
+         #projects-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 2.5rem; /* gap-10 */
+         }
+         .project-card {
+            display: block; /* Make the whole card clickable */
+            border-radius: 0.5rem; /* rounded-lg for focus ring */
+            cursor: pointer;
+             text-align: left; /* Ensure button text aligns left */
+         }
+         .project-card:focus { outline: none; } /* Handled by :focus-visible */
+
+         .project-image-container {
+            margin-bottom: 1rem; /* mb-4 */
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: var(--shadow-md);
+            position: relative;
+            aspect-ratio: 4 / 3;
+            transition: box-shadow 0.3s ease-in-out;
+         }
+         .project-card:hover .project-image-container { box-shadow: var(--shadow-xl); }
+
+         .project-image-overlay {
+             position: absolute;
+             inset: 0;
+             background-color: var(--overlay-hover);
+             opacity: 0;
+             transition: opacity 0.3s ease-in-out;
+             z-index: 1;
+         }
+         .project-card:hover .project-image-overlay { opacity: 1; }
+
+         .project-image {
+             width: 100%;
+             height: 100%;
+             object-fit: cover;
+             transition: transform 0.5s ease-in-out;
+         }
+         .project-card:hover .project-image { transform: scale(1.05); }
+
+         .project-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem; /* gap-4 */
+         }
+         .project-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 500;
+            margin-bottom: 0.25rem; /* mb-1 */
+            color: var(--text-heading);
+            transition: color 0.2s ease;
+         }
+         .project-card:hover .project-title { color: var(--text-accent); }
+         .project-description {
+            font-size: 0.875rem; /* text-sm */
+            color: var(--text-muted);
+             margin-bottom: 0; /* Override default p margin */
+         }
+         .project-year {
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 500;
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            border-radius: 9999px; /* rounded-full */
+            white-space: nowrap;
+            margin-top: 0.25rem; /* mt-1 */
+            flex-shrink: 0;
+            background-color: var(--bg-subtle);
+            color: var(--text-secondary);
+         }
+
+        /* About Section Specifics */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 3rem; /* gap-12 */
+            margin-bottom: 4rem; /* mb-16 */
+        }
+        #about-section h1 {
+             font-size: 2.25rem; /* text-4xl */
+             margin-bottom: 1.5rem; /* mb-6 */
+        }
+        #about-bio {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 2rem; /* mb-8 */
+            color: var(--text-secondary);
+             margin-bottom: 0; /* Override default p margin */
+        }
+        .about-photo-container {
+            border-radius: 0.75rem; /* rounded-xl */
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            aspect-ratio: 4 / 5;
+        }
+        .about-photo { width: 100%; height: 100%; object-fit: cover; }
+
+        .section-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 500;
+            margin-bottom: 2rem; /* mb-8 */
+            padding-left: 0.75rem; /* pl-3 */
+            border-left: 4px solid var(--border-accent);
+        }
+        .experience-list { margin-bottom: 4rem; /* mb-16 */ }
+        .experience-item { padding-top: 2rem; /* pt-8 */ }
+        .experience-item:first-child { border-top: 0; padding-top: 0; }
+        .experience-item + .experience-item {
+            border-top: 1px solid var(--border-primary);
+            margin-top: 2.5rem; /* space-y-10 approximation */
+        }
+
+        .experience-header {
+            display: flex;
+            flex-direction: column; /* Default mobile */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+        .experience-company {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 500;
+            color: var(--text-accent);
+            margin-bottom: 0.25rem; /* mb-1 */
+        }
+        .experience-period {
+            font-size: 0.875rem; /* text-sm */
+            color: var(--text-muted);
+        }
+         .experience-role {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 500;
+            margin-bottom: 0.5rem; /* mb-2 */
+            color: var(--text-heading);
+        }
+        .experience-description {
+            line-height: 1.625; /* leading-relaxed */
+            color: var(--text-secondary);
+             margin-bottom: 0; /* Override default p margin */
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem; /* gap-3 */
+            margin-bottom: 4rem; /* mb-16 */
+        }
+        .skill-tag {
+            padding: 0.5rem 1rem; /* px-4 py-2 */
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.875rem; /* text-sm */
+            background-color: var(--bg-subtle);
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section Specifics */
+        #contact-section .contact-intro {
+            max-width: 48rem; /* max-w-3xl */
+        }
+        #contact-section h1 {
+            font-size: 2.25rem; /* text-4xl */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        #contact-section .contact-intro p {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.625; /* leading-relaxed */
+            margin-bottom: 3rem; /* mb-12 */
+            color: var(--text-secondary);
+             margin-bottom: 3rem; /* mb-12 Explicit */
+        }
+        .contact-channel { margin-bottom: 3rem; /* mb-12 */ }
+        .contact-channel h2 {
+             font-size: 1.5rem; /* text-2xl */
+             font-weight: 500;
+             margin-bottom: 1rem; /* mb-4 */
+             padding-left: 0.75rem; /* pl-3 */
+             border-left: 4px solid var(--border-accent);
+        }
+        .email-link {
+             font-size: 1.25rem; /* text-xl */
+             display: inline-flex;
+             align-items: center;
+             gap: 0.5rem; /* gap-2 */
+             color: var(--text-heading); /* Use heading color for email */
+             transition: color 0.2s ease;
+        }
+        .email-link:hover { color: var(--text-accent); text-decoration: none; }
+        .email-link .arrow-icon {
+            width: 1.25rem; height: 1.25rem; /* w-5 h-5 */
+            transition: transform 0.2s ease;
+        }
+        .email-link:hover .arrow-icon { transform: translateX(0.25rem); }
+
+        .socials-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1rem; /* gap-4 */
+        }
+        .social-link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem; /* p-5 */
+            border-radius: 0.75rem; /* rounded-xl */
+            background-color: var(--bg-card);
+            color: var(--text-heading);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .social-link-card:hover {
+            background-color: var(--bg-card-hover);
+            box-shadow: var(--shadow-md);
+        }
+        .social-link-card .social-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* gap-3 */
+        }
+        .social-icon { width: 1.25rem; height: 1.25rem; /* w-5 h-5 */ }
+        .social-name {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 500;
+        }
+        .social-link-card .arrow-icon {
+            width: 1.25rem; height: 1.25rem; /* w-5 h-5 */
+            color: var(--text-accent);
+            transition: transform 0.2s ease;
+        }
+        .social-link-card:hover .arrow-icon { transform: translateX(0.25rem); }
+
+        /* Footer Styles */
+        footer {
+            padding-top: 2.5rem; /* py-10 */
+            padding-bottom: 2.5rem;
+            border-top: 1px solid var(--border-primary);
+            position: relative;
+            z-index: 10;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column; /* Mobile first */
+            justify-content: space-between;
+            align-items: flex-start; /* Mobile */
+            gap: 1.5rem; /* gap-6 */
+        }
+        .copyright {
+            font-size: 0.875rem; /* text-sm */
+            color: var(--text-muted);
+             margin-bottom: 0; /* Override default p margin */
+        }
+        .footer-socials {
+            display: flex;
+            gap: 1.25rem; /* space-x-5 approx */
+        }
+        .footer-social-link {
+            display: block; /* Make link clickable */
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+            border-radius: 0.25rem; /* rounded for focus */
+        }
+        .footer-social-link:hover { color: var(--text-accent); }
+        .footer-social-link .social-icon { width: 1.25rem; height: 1.25rem; }
+
+        /* Project Modal Styles */
+        #project-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            overflow-y: auto;
+            background-color: var(--bg-modal);
+            color: var(--text-secondary); /* Base text for modal */
+        }
+        #project-modal.hidden { display: none; }
+        .modal-container {
+            max-width: 72rem; /* max-w-6xl */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem;
+            padding-bottom: 4rem; /* pb-16 */
+        }
+        .modal-header {
+            position: sticky;
+            top: 0;
+            padding-top: 1.5rem; /* py-6 */
+            padding-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10; /* Above modal content */
+            background-color: var(--bg-modal);
+            border-bottom: 1px solid var(--border-primary);
+        }
+        .modal-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 500;
+            color: var(--text-heading);
+        }
+        .modal-close-button {
+            font-size: 0.875rem; /* text-sm */
+            text-transform: uppercase;
+            letter-spacing: 0.05em; /* tracking-wider */
+            display: flex;
+            align-items: center;
+            gap: 0.25rem; /* gap-1 */
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            border-radius: 0.25rem; /* rounded */
+            color: var(--text-muted);
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+        .modal-close-button:hover {
+            color: var(--text-primary);
+            background-color: var(--bg-hover);
+        }
+        .modal-close-button .icon { width: 1rem; height: 1rem; /* w-4 h-4 */ }
+
+        .modal-main-image-container {
+            margin-top: 2rem; /* mt-8 */
+            margin-bottom: 3rem; /* mb-12 */
+        }
+        .modal-main-image {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: cover;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: var(--shadow-lg);
+        }
+        .modal-details-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 2rem; /* gap-8 */
+            margin-bottom: 3rem; /* mb-12 */
+        }
+        .detail-label {
+            font-size: 0.875rem; /* text-sm */
+            text-transform: uppercase;
+            letter-spacing: 0.05em; /* tracking-wider */
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+        .detail-value {
+            font-size: 1.125rem; /* text-lg */
+            color: var(--text-primary);
+             margin-bottom: 0; /* Override default p margin */
+        }
+        .modal-text-section { margin-bottom: 3rem; /* mb-12 */ }
+        .modal-text-section h3 { /* Use detail-label style */
+            font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;
+            color: var(--text-muted); margin-bottom: 1rem; /* mb-4 */
+        }
+        .modal-text-section p {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.625; /* leading-relaxed */
+            max-width: 48rem; /* max-w-3xl */
+            color: var(--text-secondary);
+             margin-bottom: 0; /* Override default p margin */
+        }
+        .modal-gallery-container, .modal-tags-container { margin-bottom: 4rem; /* mb-16 */ }
+        .modal-gallery-container h3, .modal-tags-container h3 { /* Use detail-label style */
+             font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;
+             color: var(--text-muted); margin-bottom: 1.5rem; /* mb-6 */
+        }
+         .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1.5rem; /* gap-6 */
+        }
+        .gallery-image-container {
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            aspect-ratio: 16 / 9; /* aspect-video */
+        }
+        .gallery-image { width: 100%; height: 100%; object-fit: cover; }
+
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem; /* gap-2 */
+        }
+        .modal-tags-container h3 { margin-bottom: 1rem; } /* mb-4 */
+
+        .modal-tag {
+            padding: 0.25rem 0.75rem; /* px-3 py-1 */
+            font-size: 0.75rem; /* text-xs */
+            border-radius: 9999px; /* rounded-full */
+            background-color: var(--bg-subtle);
+            color: var(--text-secondary);
+        }
+
+
+        /* Responsive Styles */
+        @media (min-width: 640px) { /* sm */
+             .experience-header { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; /* mb-3 */ }
+             .experience-company { margin-bottom: 0; }
+             .experience-item + .experience-item { margin-top: 3rem; } /* space-y-12 */
+             .socials-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; /* md:gap-5 */ }
+             .modal-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+             .modal-tag { font-size: 0.875rem; /* md:text-sm */ }
+        }
+
+        @media (min-width: 768px) { /* md */
+            .desktop-nav { display: flex; align-items: center; }
+            .mobile-nav-toggle-area { display: none; }
+            #mobile-menu { display: none !important; } /* Ensure hidden on md+ */
+
+            .header-content { padding-top: 1.25rem; padding-bottom: 1.25rem; /* md:py-5 */ }
+            main { padding-top: 8rem; /* md:pt-32 */ }
+
+             #work-section .intro-text { margin-bottom: 4rem; /* md:mb-16 */ }
+             #work-section h1 { font-size: 3rem; /* md:text-5xl */ margin-bottom: 1.5rem; /* md:mb-6 */ }
+             #work-section .intro-text p { font-size: 1.25rem; /* md:text-xl */ }
+             #projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; /* md:gap-12 */ }
+             .project-image-container { margin-bottom: 1.25rem; /* md:mb-5 */ }
+             .project-title { font-size: 1.5rem; /* md:text-2xl */ }
+             .project-description { font-size: 1rem; /* md:text-base */ }
+             .project-year { font-size: 0.875rem; /* md:text-sm */ }
+
+            .about-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4rem; /* md:gap-16 */ }
+            .about-grid-text { grid-column: span 2 / span 2; }
+            #about-section h1 { font-size: 3rem; /* md:text-5xl */ margin-bottom: 2rem; /* md:mb-8 */ }
+            #about-bio { font-size: 1.25rem; /* md:text-xl */ }
+            .section-heading { font-size: 1.875rem; /* md:text-3xl */ }
+            .experience-header { margin-bottom: 0.75rem; /* md:mb-3 */ }
+            .experience-role { margin-bottom: 0.75rem; /* md:mb-3 */ }
+
+             #contact-section h1 { font-size: 3rem; /* md:text-5xl */ margin-bottom: 2rem; /* md:mb-8 */ }
+             #contact-section .contact-intro p { font-size: 1.25rem; /* md:text-xl */ margin-bottom: 4rem; /* md:mb-16 */ }
+             .contact-channel { margin-bottom: 4rem; /* md:mb-16 */ }
+             .contact-channel h2 { font-size: 1.875rem; /* md:text-3xl */ margin-bottom: 1.5rem; /* md:mb-6 */ }
+             .email-link { font-size: 1.5rem; /* md:text-2xl */ }
+             .email-link .arrow-icon { width: 1.5rem; height: 1.5rem; /* md:w-6 h-6 */ }
+             .social-link-card { padding: 1.5rem; /* md:p-6 */ }
+             .social-name { font-size: 1.25rem; /* md:text-xl */ }
+
+            .footer-content { flex-direction: row; align-items: center; } /* md */
+            footer { padding-top: 3rem; padding-bottom: 3rem; /* md:py-12 */ }
+
+             .modal-title { font-size: 1.875rem; /* md:text-3xl */ }
+             .modal-details-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; /* md:gap-12 */ }
+             .modal-text-section p { font-size: 1.25rem; /* md:text-xl */ }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .desktop-nav .nav-button { margin-left: 2.5rem; /* lg:space-x-10 */ }
+            #projects-grid { gap: 4rem; /* lg:gap-16 */ }
+            .modal-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+
+         /* Icon base style */
+        .icon {
+            display: inline-block;
+            vertical-align: middle;
+            width: 1em;
+            height: 1em;
+            stroke-width: 2;
+            fill: none; /* Default for Fi icons */
+            stroke: currentColor;
+        }
+        /* Specific icons that use fill */
+        .icon.fill-current { fill: currentColor; stroke: none; }
+        .icon.stroke-current { stroke: currentColor; fill: none; }
+
+    </style>
+</head>
+<body>
+
+    <div id="app-wrapper">
+
+        <!-- Header -->
+        <header id="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <!-- Logo -->
+                    <div>
+                        <button id="logo-button" class="logo-button focus-visible:outline-none">
+                            Nasir<span>.</span>studio
+                        </button>
+                    </div>
+
+                    <!-- Desktop Nav -->
+                    <nav class="desktop-nav">
+                        <button data-tab="work" class="nav-button">Work</button>
+                        <button data-tab="about" class="nav-button">About</button>
+                        <button data-tab="contact" class="nav-button">Contact</button>
+                        <button id="theme-toggle-desktop" class="theme-toggle-button focus-visible:outline-none" aria-label="Activate dark mode">
+                            <!-- SVG Icon will be injected by JS -->
+                        </button>
+                    </nav>
+
+                    <!-- Mobile Nav Toggle Area -->
+                    <div class="mobile-nav-toggle-area">
+                         <button id="theme-toggle-mobile" class="theme-toggle-button focus-visible:outline-none" aria-label="Activate dark mode">
+                            <!-- SVG Icon will be injected by JS -->
+                        </button>
+                        <button id="menu-toggle-button" class="focus-visible:outline-none" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                            <!-- SVG Icon will be injected by JS -->
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden">
+           <div class="container mobile-menu-container">
+                <div class="mobile-menu-header">
+                   <button id="mobile-menu-close-button" class="focus-visible:outline-none" aria-label="Close menu">
+                        <!-- Close Icon SVG -->
+                   </button>
+                </div>
+                <nav class="mobile-menu-nav">
+                    <button data-tab="work" class="mobile-nav-button">Work</button>
+                    <button data-tab="about" class="mobile-nav-button">About</button>
+                    <button data-tab="contact" class="mobile-nav-button">Contact</button>
+                </nav>
+                <div class="mobile-menu-footer-spacer"></div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main>
+            <div class="container">
+                <!-- Work Section -->
+                <section id="work-section" class="content-section animate-fadeIn">
+                    <div class="intro-text">
+                        <h1>Designing meaningful digital experiences</h1>
+                        <p> <!-- Static Intro Text -->
+                          I create thoughtful interfaces and brand identities that connect with users on both functional and emotional levels.
+                        </p>
+                    </div>
+                    <div id="projects-grid">
+                        <!-- Projects will be injected here by JS -->
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section id="about-section" class="content-section hidden">
+                     <div class="about-grid">
+                        <div class="about-grid-text">
+                          <h1>About me</h1>
+                          <p id="about-bio"> <!-- Populated by JS --> </p>
+                        </div>
+                        <div class="about-photo-container">
+                          <img id="about-photo" src="" alt="Portrait of the designer" class="about-photo" loading="lazy"/>
+                        </div>
+                     </div>
+
+                     <div style="max-width: 56rem; margin: auto;"> <!-- max-w-4xl mx-auto -->
+                        <h2 class="section-heading">Experience</h2>
+                        <div id="experience-list" class="experience-list">
+                            <!-- Experience items will be injected here -->
+                        </div>
+
+                        <h2 class="section-heading">Skills</h2>
+                        <div id="skills-list" class="skills-list">
+                            <!-- Skills will be injected here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Section -->
+                <section id="contact-section" class="content-section hidden">
+                    <div class="contact-intro">
+                        <h1>Let's work together</h1>
+                        <p> <!-- Static Intro Text -->
+                          I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out through any of the channels below.
+                        </p>
+
+                        <div class="contact-channel">
+                           <h2 id="contact-email-heading">Email</h2>
+                           <a id="contact-email" href="" class="email-link group focus-visible:outline-none">
+                              <span id="contact-email-text"></span>
+                              <!-- ArrowRight SVG -->
+                           </a>
+                        </div>
+
+                        <div class="contact-channel">
+                           <h2 id="contact-socials-heading">Social</h2>
+                           <div id="socials-list" class="socials-grid">
+                               <!-- Social links will be injected here -->
+                           </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div>
+                       <p class="copyright">
+                           © <span id="footer-year"></span> Nasir.studio — All rights reserved.
+                       </p>
+                    </div>
+                    <div id="footer-socials" class="footer-socials">
+                       <!-- Footer social icons will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="hidden">
+        <div class="modal-container">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h2 id="modal-title" class="modal-title"></h2>
+                <button id="modal-close-button" class="modal-close-button focus-visible:outline-none" aria-label="Close project details">
+                     <!-- ArrowLeft SVG --> Back
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="modal-main-image-container">
+                <img id="modal-main-image" src="" alt="" class="modal-main-image"/>
+            </div>
+
+            <div class="modal-details-grid">
+                <div>
+                   <h3 class="detail-label">Project</h3>
+                   <p id="modal-description" class="detail-value"></p>
+                </div>
+                <div>
+                   <h3 class="detail-label">Role</h3>
+                   <p id="modal-role" class="detail-value"></p>
+                </div>
+                <div>
+                   <h3 class="detail-label">Duration</h3>
+                   <p id="modal-duration" class="detail-value"></p>
+                </div>
+            </div>
+
+            <div class="modal-text-section">
+                <h3>Overview</h3>
+                <p id="modal-content"></p>
+            </div>
+
+            <div class="modal-text-section">
+                <h3>Challenge</h3>
+                <p id="modal-challenge"></p>
+            </div>
+
+            <div id="modal-gallery-container" class="hidden">
+                <h3>Gallery</h3>
+                <div id="modal-gallery" class="modal-gallery">
+                    <!-- Gallery images injected here -->
+                </div>
+            </div>
+
+            <div id="modal-tags-container" class="hidden">
+                 <h3>Tags</h3>
+                <div id="modal-tags" class="modal-tags">
+                    <!-- Tags injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Wrap everything in a DOMContentLoaded listener
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- STATE VARIABLES ---
+            let darkMode = false;
+            let menuOpen = false;
+            let currentTab = 'work'; // 'work', 'about', 'contact'
+            let activeProject = null; // null or project id
+            let isScrolled = false;
+
+             // --- DATA (RESTORED FULL CONTENT) ---
+             const projects = [
+                 {
+                  id: 'p1',
+                  title: 'Heymoon',
+                  description: 'iOS App Design',
+                  year: '2024',
+                  tags: ['iOS', 'Mobile', 'Product Design'],
+                  image: 'https://picsum.photos/seed/heymoon_main/800/600',
+                  gallery: [
+                    'https://picsum.photos/seed/heymoon_g1/800/600',
+                    'https://picsum.photos/seed/heymoon_g2/800/600',
+                    'https://picsum.photos/seed/heymoon_g3/800/600'
+                  ],
+                  content: 'Heymoon is a modern iOS application designed to help couples plan and organize their honeymoon experiences. The app features a clean, minimalist interface with intuitive navigation and thoughtful interactions that guide users through the planning process effortlessly. I focused on creating an emotional connection through warm color palettes and micro-interactions that celebrate each planning milestone.',
+                  role: 'Lead Product Designer',
+                  duration: '3 months',
+                  challenge: 'Creating an experience that balances practical planning features with the emotional significance of honeymoon planning.'
+                },
+                {
+                  id: 'p2',
+                  title: 'Nesha',
+                  description: 'Brand Identity',
+                  year: '2023',
+                  tags: ['Branding', 'Visual Design', 'Typography'],
+                  image: 'https://picsum.photos/seed/nesha_main/800/600',
+                  gallery: [
+                    'https://picsum.photos/seed/nesha_g1/800/600',
+                    'https://picsum.photos/seed/nesha_g2/800/600',
+                    'https://picsum.photos/seed/nesha_g3/800/600'
+                  ],
+                  content: 'Nesha is a premium wellness brand focusing on natural ingredients and holistic health approaches. The brand identity system draws inspiration from natural forms and botanical elements while maintaining a modern, sophisticated aesthetic. The resulting visual language conveys tranquility, purity, and premium quality through a carefully curated color palette, custom typography, and organic patterns.',
+                  role: 'Brand Designer',
+                  duration: '2.5 months',
+                  challenge: 'Developing a visual language that communicates premium quality while still feeling approachable and authentic.'
+                },
+                {
+                  id: 'p3',
+                  title: 'Flowch',
+                  description: 'Web Platform',
+                  year: '2023',
+                  tags: ['Web', 'UI/UX', 'Product Design', 'Design System'],
+                  image: 'https://picsum.photos/seed/flowch_main/800/600',
+                  gallery: [
+                    'https://picsum.photos/seed/flowch_g1/800/600',
+                    'https://picsum.photos/seed/flowch_g2/800/600',
+                    'https://picsum.photos/seed/flowch_g3/800/600'
+                  ],
+                  content: 'Flowch is a productivity web platform designed to streamline team workflows and project management. I led the design of this comprehensive solution from initial research through to final implementation, creating a scalable design system that supports complex functionality while maintaining visual consistency. The interface prioritizes clarity and efficiency, helping teams visualize their workflow and identify bottlenecks at a glance.',
+                  role: 'Lead UI/UX Designer',
+                  duration: '6 months',
+                  challenge: 'Simplifying complex workflow visualization and management tools into an intuitive interface that teams of all sizes can adopt with minimal training.'
+                },
+                {
+                  id: 'p4',
+                  title: 'Diptych',
+                  description: 'Mobile App',
+                  year: '2022',
+                  tags: ['Mobile', 'UI Design', 'Photography'],
+                  image: 'https://picsum.photos/seed/diptych_main/800/600',
+                  gallery: [
+                    'https://picsum.photos/seed/diptych_g1/800/600',
+                    'https://picsum.photos/seed/diptych_g2/800/600',
+                    'https://picsum.photos/seed/diptych_g3/800/600'
+                  ],
+                  content: 'Diptych is a creative photography app that helps users create artistic photo pairs with minimal effort. The app features an intuitive editing interface with sophisticated algorithms that analyze color, composition, and subject matter to suggest compelling photo pairings. I designed a playful yet refined UI that puts the user\'s content front and center while providing powerful creative tools in an accessible way.',
+                  role: 'UI Designer',
+                  duration: '4 months',
+                  challenge: 'Creating an interface that balances sophisticated photo editing features with simplicity and approachability for casual photographers.'
+                }
+            ];
+
+            const aboutContent = {
+                 bio: `I'm a product designer specializing in digital experiences with a focus on thoughtful interactions and clean aesthetics. My process combines strategic thinking with detailed execution to create meaningful user-centered designs. With over eight years of experience across various industries, I bring a versatile skill set and holistic perspective to each project.`,
+                photo: 'https://picsum.photos/seed/profile_main/500/600',
+                experience: [
+                  {
+                    company: 'Design Studio',
+                    role: 'Senior Product Designer',
+                    period: '2021 - Present',
+                    description: 'Leading design initiatives for enterprise clients focusing on SaaS platforms and mobile applications. Established design systems and workflows that increased team efficiency by 35% while maintaining consistent quality across products.'
+                  },
+                  {
+                    company: 'Tech Startup',
+                    role: 'UI/UX Designer',
+                    period: '2018 - 2021',
+                    description: 'Designed user interfaces and experiences for early-stage products, focusing on usability and accessibility. Collaborated closely with developers and product managers to iterate rapidly based on user feedback and analytics.'
+                  },
+                  {
+                    company: 'Creative Agency',
+                    role: 'Visual Designer',
+                    period: '2016 - 2018',
+                    description: 'Created visual identity systems, marketing materials, and digital interfaces for clients across various industries. Developed a strong foundation in visual communication and brand storytelling.'
+                  }
+                ],
+                skills: ['Product Design', 'UI/UX', 'Design Systems', 'Prototyping', 'User Research', 'Visual Design', 'Interaction Design', 'Typography', 'Motion Design']
+            };
+
+            const contactInfo = {
+                email: 'hello@nasirstudio.com',
+                socials: [
+                    { name: 'Twitter', url: 'https://twitter.com/', icon: 'twitter' },
+                    { name: 'LinkedIn', url: 'https://linkedin.com/', icon: 'linkedin' },
+                    { name: 'Instagram', url: 'https://instagram.com/', icon: 'instagram' },
+                    { name: 'Dribbble', url: 'https://dribbble.com/', icon: 'dribbble' }
+                ]
+            };
+
+            // --- SVG ICONS ---
+            // Feather Icons SVGs (inline for simplicity)
+             const icons = {
+                sun: `<svg class="icon stroke-current" style="width:1.25rem; height:1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`,
+                moon: `<svg class="icon stroke-current" style="width:1.25rem; height:1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`,
+                menu: `<svg id="menu-icon" class="icon stroke-current" style="width:1.5rem; height:1.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
+                x: `<svg id="close-icon" class="icon stroke-current" style="width:1.5rem; height:1.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+                arrowRight: `<svg class="icon arrow-icon stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`,
+                arrowLeft: `<svg class="icon stroke-current" style="width:1rem; height:1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>`,
+                twitter: `<svg class="icon social-icon fill-current" viewBox="0 0 24 24" fill="currentColor" stroke-width="0"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>`,
+                linkedin: `<svg class="icon social-icon fill-current" viewBox="0 0 24 24" fill="currentColor" stroke-width="0"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>`,
+                instagram: `<svg class="icon social-icon stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>`,
+                dribbble: `<svg class="icon social-icon fill-current" viewBox="0 0 24 24" fill="currentColor" stroke-width="0"><circle cx="12" cy="12" r="10"></circle><path fill="#fff" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5.52 13.04c-.55.44-1.19.8-1.9.08-.72-.72-.88-1.76-.32-2.32.55-.55 1.19-.8 1.9-.08.72.72.88 1.76.32 2.32zm-2.68-6.4c-.56-.48-1.28-.8-2.08-.72-.8.08-1.52.48-1.92 1.12-.4.64-.48 1.44-.24 2.16.24.72.8 1.28 1.6 1.44.8.16 1.6-.08 2.16-.64.56-.56.8-1.28.72-2.08-.08-.8-.48-1.52-1.12-1.92zm-6.4 4.48c-.55.44-1.19.8-1.9.08-.72-.72-.88-1.76-.32-2.32.55-.55 1.19-.8 1.9-.08.72.72.88 1.76.32 2.32zm1.76-8.48c.64-.4 1.44-.48 2.16-.24.72.24 1.28.8 1.44 1.6.16.8-.08 1.6-.64 2.16-.56.56-1.28.8-2.08.72-.8-.08-1.52-.48-1.92-1.12-.4-.64-.48-1.44-.24-2.16.24-.72.8-1.28 1.6-1.44z"></path></svg>` // Adjusted Dribbble for fill
+            };
+
+
+            // --- DOM ELEMENTS ---
+            const htmlElement = document.documentElement;
+            const bodyElement = document.body;
+            const header = document.getElementById('main-header');
+            const logoButton = document.getElementById('logo-button');
+            const desktopNavButtons = document.querySelectorAll('.desktop-nav .nav-button');
+            const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const menuToggleButton = document.getElementById('menu-toggle-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+            const mobileNavButtons = document.querySelectorAll('#mobile-menu .mobile-nav-button');
+
+            const contentSections = document.querySelectorAll('.content-section');
+            const workSection = document.getElementById('work-section');
+            const aboutSection = document.getElementById('about-section');
+            const contactSection = document.getElementById('contact-section');
+            const projectsGrid = document.getElementById('projects-grid');
+
+            const aboutBio = document.getElementById('about-bio');
+            const aboutPhoto = document.getElementById('about-photo');
+            const experienceList = document.getElementById('experience-list');
+            const skillsList = document.getElementById('skills-list');
+
+            const contactEmailLink = document.getElementById('contact-email');
+            const contactEmailText = document.getElementById('contact-email-text');
+            const socialsList = document.getElementById('socials-list');
+            const contactEmailHeading = document.getElementById('contact-email-heading'); // Added
+            const contactSocialsHeading = document.getElementById('contact-socials-heading'); // Added
+
+
+            const footerYear = document.getElementById('footer-year');
+            const footerSocials = document.getElementById('footer-socials');
+
+            const projectModal = document.getElementById('project-modal');
+            const modalCloseButton = document.getElementById('modal-close-button');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMainImage = document.getElementById('modal-main-image');
+            const modalDescription = document.getElementById('modal-description');
+            const modalRole = document.getElementById('modal-role');
+            const modalDuration = document.getElementById('modal-duration');
+            const modalContent = document.getElementById('modal-content');
+            const modalChallenge = document.getElementById('modal-challenge');
+            const modalGalleryContainer = document.getElementById('modal-gallery-container');
+            const modalGallery = document.getElementById('modal-gallery');
+            const modalTagsContainer = document.getElementById('modal-tags-container');
+            const modalTags = document.getElementById('modal-tags');
+
+             // --- HELPER FUNCTIONS ---
+
+            const getSocialIconSVG = (name) => icons[name.toLowerCase()] || '';
+
+            const applyTheme = () => {
+                htmlElement.classList.toggle('dark', darkMode);
+                const themeIcon = darkMode ? icons.sun : icons.moon;
+                const themeLabel = darkMode ? 'Activate light mode' : 'Activate dark mode';
+
+                if (themeToggleDesktop) themeToggleDesktop.innerHTML = themeIcon;
+                if (themeToggleMobile) themeToggleMobile.innerHTML = themeIcon;
+                if (themeToggleDesktop) themeToggleDesktop.setAttribute('aria-label', themeLabel);
+                if (themeToggleMobile) themeToggleMobile.setAttribute('aria-label', themeLabel);
+            };
+
+            const toggleDarkMode = () => {
+                darkMode = !darkMode;
+                applyTheme();
+                try {
+                    localStorage.setItem('darkMode', darkMode);
+                } catch (e) { console.warn("LocalStorage not available for theme saving."); }
+            };
+
+             const toggleMenu = () => {
+                menuOpen = !menuOpen;
+                mobileMenu.classList.toggle('hidden', !menuOpen);
+                menuToggleButton.innerHTML = menuOpen ? icons.x : icons.menu; // Toggle icon
+                menuToggleButton.setAttribute('aria-expanded', menuOpen);
+                menuToggleButton.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
+                bodyElement.classList.toggle('modal-open', menuOpen || activeProject !== null); // Lock scroll if menu OR modal is open
+            };
+
+
+            const setActiveTab = (tabId, skipScroll = false) => {
+                currentTab = tabId;
+                // Don't reset activeProject here, allow modal to persist across non-tab changes if desired
+                // activeProject = null; // REMOVED
+
+                // Hide all sections first, then show active one
+                contentSections.forEach(section => section.classList.add('hidden'));
+                const activeSection = document.getElementById(`${tabId}-section`);
+                if (activeSection) {
+                    activeSection.classList.remove('hidden');
+                    // Ensure animation runs again if desired (might need reset)
+                     activeSection.style.animation = 'none';
+                     activeSection.offsetHeight; /* trigger reflow */
+                     activeSection.style.animation = null;
+                     activeSection.classList.add('animate-fadeIn');
+                } else {
+                    console.error(`Section ${tabId}-section not found`);
+                }
+
+                // Update nav button active states
+                desktopNavButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+                mobileNavButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+
+                // Close mobile menu if open when changing tabs
+                if (menuOpen) {
+                    toggleMenu();
+                }
+                // Close project modal only if switching MAIN tabs (work, about, contact)
+                if (['work', 'about', 'contact'].includes(tabId)) {
+                     closeProjectModal();
+                }
+
+
+                // Scroll to top unless specified otherwise
+                if (!skipScroll) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            };
+
+
+            const openProjectModal = (projectId) => {
+                 const projectData = projects.find(p => p.id === projectId);
+                 if (!projectData) return;
+
+                 activeProject = projectId;
+
+                 // Populate Modal - Check elements exist before setting properties
+                 if(modalTitle) modalTitle.textContent = projectData.title;
+                 if(modalMainImage) {
+                     modalMainImage.src = projectData.image;
+                     modalMainImage.alt = projectData.title;
+                 }
+                 if(modalDescription) modalDescription.textContent = projectData.description;
+                 if(modalRole) modalRole.textContent = projectData.role;
+                 if(modalDuration) modalDuration.textContent = projectData.duration;
+                 if(modalContent) modalContent.textContent = projectData.content; // Using full content
+                 if(modalChallenge) modalChallenge.textContent = projectData.challenge; // Using full challenge
+
+                 // Gallery
+                 if (projectData.gallery && projectData.gallery.length > 0 && modalGallery && modalGalleryContainer) {
+                     modalGallery.innerHTML = projectData.gallery.map((imgSrc, index) => `
+                        <div class="gallery-image-container">
+                            <img src="${imgSrc}" alt="${projectData.title} gallery image ${index + 1}" class="gallery-image" loading="lazy"/>
+                        </div>
+                     `).join('');
+                     modalGalleryContainer.classList.remove('hidden');
+                 } else if (modalGalleryContainer) {
+                     modalGalleryContainer.classList.add('hidden');
+                 }
+
+                 // Tags
+                 if (projectData.tags && projectData.tags.length > 0 && modalTags && modalTagsContainer) {
+                     modalTags.innerHTML = projectData.tags.map(tag => `
+                        <span class="modal-tag">${tag}</span>
+                     `).join('');
+                     modalTagsContainer.classList.remove('hidden');
+                 } else if(modalTagsContainer) {
+                      modalTagsContainer.classList.add('hidden');
+                 }
+
+                 // Show Modal
+                 if (projectModal) {
+                     projectModal.classList.remove('hidden');
+                     projectModal.scrollTop = 0; // Scroll modal content to top
+                     bodyElement.classList.add('modal-open'); // Prevent body scroll
+                 }
+            };
+
+            const closeProjectModal = () => {
+                if (activeProject === null && projectModal?.classList.contains('hidden')) return; // Already closed
+
+                activeProject = null;
+                if (projectModal) projectModal.classList.add('hidden');
+                // Only remove modal-open if mobile menu is also closed
+                if (!menuOpen) {
+                    bodyElement.classList.remove('modal-open');
+                }
+            };
+
+            const handleScroll = () => {
+                 const scrolled = window.scrollY > 10;
+                 if (scrolled !== isScrolled) {
+                     isScrolled = scrolled;
+                     if (header) header.classList.toggle('scrolled', isScrolled);
+                 }
+            };
+
+
+            // --- INITIALIZATION ---
+
+            // Check for element existence before using them
+            if (!htmlElement || !bodyElement || !header || !mobileMenu) {
+                console.error("Core layout elements not found. Aborting script.");
+                return;
+            }
+
+            // Set initial dark mode
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let savedDarkMode = null;
+            try { savedDarkMode = localStorage.getItem('darkMode'); } catch(e) { /* ignore */ }
+            darkMode = savedDarkMode !== null ? (savedDarkMode === 'true') : prefersDark;
+            applyTheme(); // Apply theme early
+
+             // Inject initial icons
+            if (themeToggleDesktop) themeToggleDesktop.innerHTML = darkMode ? icons.sun : icons.moon;
+            if (themeToggleMobile) themeToggleMobile.innerHTML = darkMode ? icons.sun : icons.moon;
+            if (menuToggleButton) menuToggleButton.innerHTML = icons.menu;
+            if (mobileMenuCloseButton) mobileMenuCloseButton.innerHTML = icons.x;
+            if (modalCloseButton) modalCloseButton.insertAdjacentHTML('afterbegin', icons.arrowLeft);
+            if (contactEmailLink) contactEmailLink.insertAdjacentHTML('beforeend', icons.arrowRight);
+
+
+            // Populate Work Section
+            if (projectsGrid) {
+                 projectsGrid.innerHTML = projects.map(project => `
+                    <button class="project-card focus-visible:outline-none" data-project-id="${project.id}" aria-label="View details for ${project.title}">
+                        <div class="project-image-container">
+                            <div class="project-image-overlay"></div>
+                            <img src="${project.image}" alt="${project.title} preview" class="project-image" loading="lazy"/>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-text-content">
+                                <h2 class="project-title">${project.title}</h2>
+                                <p class="project-description">${project.description}</p>
+                            </div>
+                            <span class="project-year">${project.year}</span>
+                        </div>
+                    </button>
+                `).join('');
+            }
+
+
+            // Populate About Section (Using full bio)
+            if (aboutBio) aboutBio.textContent = aboutContent.bio;
+            if (aboutPhoto) aboutPhoto.src = aboutContent.photo;
+            if (experienceList) {
+                experienceList.innerHTML = aboutContent.experience.map(exp => `
+                     <div class="experience-item">
+                        <div class="experience-header">
+                            <h3 class="experience-company">${exp.company}</h3>
+                            <p class="experience-period">${exp.period}</p>
+                        </div>
+                        <p class="experience-role">${exp.role}</p>
+                        <p class="experience-description">${exp.description}</p> <!-- Using full description -->
+                    </div>
+                `).join('');
+            }
+             if (skillsList) {
+                skillsList.innerHTML = aboutContent.skills.map(skill => `
+                     <span class="skill-tag">${skill}</span>
+                `).join('');
+            }
+
+
+            // Populate Contact Section
+            if (contactEmailLink) contactEmailLink.href = `mailto:${contactInfo.email}`;
+            if (contactEmailText) contactEmailText.textContent = contactInfo.email;
+            if (socialsList) {
+                 socialsList.innerHTML = contactInfo.socials.map(social => `
+                     <a href="${social.url}" target="_blank" rel="noopener noreferrer" class="social-link-card group focus-visible:outline-none">
+                        <div class="social-info">
+                            ${getSocialIconSVG(social.icon)}
+                            <span class="social-name">${social.name}</span>
+                        </div>
+                        ${icons.arrowRight}
+                    </a>
+                `).join('');
+            }
+
+
+            // Populate Footer
+            if (footerYear) footerYear.textContent = new Date().getFullYear();
+            if (footerSocials) {
+                 footerSocials.innerHTML = contactInfo.socials.map(social => `
+                     <a href="${social.url}" target="_blank" rel="noopener noreferrer" class="footer-social-link focus-visible:outline-none" aria-label="Visit ${social.name}">
+                         ${getSocialIconSVG(social.icon)}
+                     </a>
+                `).join('');
+            }
+
+            // Set initial active tab state without scroll
+            setActiveTab('work', true);
+
+             // --- EVENT LISTENERS ---
+            const addSafeListener = (element, event, handler) => {
+                if (element) {
+                    element.addEventListener(event, handler);
+                } else {
+                     console.warn(`Element not found for event listener: ${event} on ${element}`);
+                }
+            }
+
+            addSafeListener(themeToggleDesktop, 'click', toggleDarkMode);
+            addSafeListener(themeToggleMobile, 'click', toggleDarkMode);
+            addSafeListener(menuToggleButton, 'click', toggleMenu);
+            addSafeListener(mobileMenuCloseButton, 'click', toggleMenu);
+            addSafeListener(logoButton, 'click', () => setActiveTab('work'));
+
+            desktopNavButtons.forEach(button => {
+                addSafeListener(button, 'click', () => setActiveTab(button.dataset.tab));
+            });
+            mobileNavButtons.forEach(button => {
+                addSafeListener(button, 'click', () => setActiveTab(button.dataset.tab));
+            });
+
+             // Project Card Clicks (using event delegation on the grid)
+             if (projectsGrid) {
+                 projectsGrid.addEventListener('click', (e) => {
+                     const card = e.target.closest('.project-card');
+                     if (card && card.dataset.projectId) {
+                         openProjectModal(card.dataset.projectId);
+                     }
+                 });
+                 // Add keydown listener for accessibility if needed (Enter/Space)
+                 projectsGrid.addEventListener('keydown', (e) => {
+                     const card = e.target.closest('.project-card');
+                      if (card && card.dataset.projectId && (e.key === 'Enter' || e.key === ' ')) {
+                         e.preventDefault(); // Prevent space scroll
+                         openProjectModal(card.dataset.projectId);
+                     }
+                 });
+             }
+
+            addSafeListener(modalCloseButton, 'click', closeProjectModal);
+
+             // Close modal on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && activeProject !== null) {
+                    closeProjectModal();
+                }
+            });
+
+            // Header Scroll Effect
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            handleScroll(); // Initial check
+
+
+            console.log("Portfolio script initialized with full content."); // Confirmation
+
+        }); // End DOMContentLoaded
+    </script>
+
+</body>
+</html>
